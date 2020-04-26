@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Car">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQACAgAACAiBAABAAXSABAAEEAIAEAAAAAgAAAABAA=</HashCode>
+      <FileName>Assets\Scripts\Car.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="path" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="ControlPanel" Collapsed="true">
+    <Position X="6.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAIAQAAAAAAAAAAAAAAAAAAAAQAAggA=</HashCode>
+      <FileName>Assets\Scripts\ControlPanel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FixedSpeedObject">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAKAAAAAEAAAAAAAAAAAAAQAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\FixedSpeedObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameManager" Collapsed="true">
+    <Position X="3.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUQgACIAAACAAAAAEQAAAEAIAAAEAAAQCAAAAIAgMA=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ObjectPooler" Collapsed="true">
+    <Position X="8" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAACAAAgAAAAAAIAACAAAIAAAAQIQAAAAACEA=</HashCode>
+      <FileName>Assets\Scripts\ObjectPooler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Path&lt;T&gt;">
+    <Position X="3.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAJAAAgAAUBAAAAAAAAAACAAAAAgAAAAIAAQAAAAM=</HashCode>
+      <FileName>Assets\Scripts\Path.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="car" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="SceneHandler" Collapsed="true">
+    <Position X="6.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\SceneHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameStopNotifier" Collapsed="true">
+    <Position X="3.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAEAEAAAAAABAAAAAAAAAAAgEAA=</HashCode>
+      <FileName>Assets\Scripts\Observer Pattern\GameStopNotifier.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="GameStopObserver" Collapsed="true">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAACABAABAEAAAAAAAAAAAAAAQgAAAAgA=</HashCode>
+      <FileName>Assets\Scripts\Observer Pattern\GameStopObserver.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.1" />
+  </Class>
+  <Class Name="UnityEngine.MonoBehaviour" Collapsed="true">
+    <Position X="5.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Interface Name="IMovingObject" Collapsed="true">
+    <Position X="6.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\IMovingObject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IRotatable" Collapsed="true">
+    <Position X="9.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\IRotatable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IUserControllable" Collapsed="true">
+    <Position X="8" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\IUserControllable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="IObserver&lt;T&gt;" Collapsed="true">
+    <Position X="8" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Observer Pattern\IObserver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="ISubject&lt;T&gt;" Collapsed="true">
+    <Position X="6.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAgEAA=</HashCode>
+      <FileName>Assets\Scripts\Observer Pattern\ISubject.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
