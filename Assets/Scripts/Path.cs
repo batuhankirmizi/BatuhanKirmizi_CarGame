@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 // sealed class --> because other classes should not be inherited from this one
 // <T> --> generic class
 public sealed class Path<T>
 {
     // List that holds all the path points
-    private LinkedList<T> pathPoints;
+    private LinkedList<T> pathList;
+    private LinkedList<Direction> dirList;
 
     // Whether a path has been succesfully created for a car or not
     private bool isCreated;
@@ -15,48 +15,60 @@ public sealed class Path<T>
 
     // Number of points in the path
     private int pointCount;
-    public int PointCount { get => pathPoints.Count; set => pointCount = value; }
+    public int PointCount { get => pathList.Count; set => pointCount = value; }
 
     // Loosely coupled with Car object
     private Car car;
 
-    // Indicates the interval of path creation
-    private float pathTimer;
-
     public Path(Car car)
     {
         this.car = car;
-        pathPoints = new LinkedList<T>();
-        pathTimer = car.speed * .02f;
+        pathList = new LinkedList<T>();
+        dirList = new LinkedList<Direction>();
+        AddDirection(Direction.NONE);
     }
 
-    private float pathTimePassed = 0f;
     /// <summary>
     ///     Adds points to the path
     /// </summary>
     /// <param name="t"> object of type T </param>
-    public void CreatePath(T t)
+    public void CreatePath(T t, Direction d)
     {
-        pathTimePassed += Time.deltaTime;
-        if (pathTimePassed >= pathTimer) {
-            AddPoint(t);
-
-            pathTimePassed = 0f;
-        }
+        AddPoint(t);
+        dirList.AddLast(d);
     }
 
     public void AddPoint(T t)
     {
-        pathPoints.AddLast(t);
+        pathList.AddLast(t);
+    }
+
+    public void AddDirection(Direction d)
+    {
+        dirList.AddLast(d);
     }
 
     internal T GetPoint(int index)
     {
-        return pathPoints.ElementAt(index);
+        return pathList.ElementAt(index);
+    }
+
+    internal Direction GetDirection(int i)
+    {
+        return dirList.ElementAt(i);
     }
 
     internal void Reset()
     {
-        pathPoints.Clear();
+        pathList.Clear();
+        dirList.Clear();
+        dirList.AddLast(Direction.NONE);
     }
+}
+
+public enum Direction
+{
+    RIGHT,
+    LEFT,
+    NONE
 }

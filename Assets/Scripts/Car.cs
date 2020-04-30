@@ -16,7 +16,10 @@ public class Car : FixedSpeedObject, IUserControllable, IRotatable
 
     // Path of the car
         // If user is controlling the car, path becomes created
-    public Path<Vector2> path;
+    public Path<float> path;
+
+    // Object's lifetime
+    private float lifetime = 0f;
 
     // Car's entrance and target point GOs
         // set in ObjectPooler when the car is instantiated at the beginning
@@ -27,56 +30,78 @@ public class Car : FixedSpeedObject, IUserControllable, IRotatable
     {
         base.Start();
         name = "Car - Active";
-        path = new Path<Vector2>(this);
+        path = new Path<float>(this);
     }
 
     private void Update()
     {
         if (!GameManager.Instance.GetGameStopped()) {
+            if (isActive)
+                InputHandling();
+            lifetime += Time.deltaTime;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (!GameManager.Instance.GetGameStopped()) {
             if (isActive) {
                 Move();
-                Rotate();
-                path.CreatePath(transform.position);
             } else {
                 MoveAlongPath();
             }
+            Rotate();
         }
+    }
+
+    private void InputHandling()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && !GameManager.Instance.GetGameStopped()) {
+            TurnLeft();
+            path.CreatePath(lifetime, Direction.LEFT);
+        } else if (Input.GetKeyDown(KeyCode.RightArrow) && !GameManager.Instance.GetGameStopped()) {
+            TurnRight();
+            path.CreatePath(lifetime, Direction.RIGHT);
+        }
+
+        if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow)) {
+            rotate = 0f;
+            path.CreatePath(lifetime, Direction.NONE);
+        }
+
     }
 
     // Stores the current point that the car moves on the path
     private int currentPathPoint = 0;
     private void MoveAlongPath()
     {
-        MoveTo(path.GetPoint(currentPathPoint));
+        if (currentPathPoint < path.PointCount)
+            MoveTo(path.GetPoint(currentPathPoint), path.GetDirection(currentPathPoint));
     }
 
-    private float rotationAngle;
-    private void MoveTo(Vector3 position)
+    private void MoveTo(float time, Direction dir)
     {
-        if (currentPathPoint < path.PointCount - 1) {
-            Vector2 v = (position - transform.position).normalized * speed * Time.deltaTime;
-            rb.MovePosition(new Vector2(transform.position.x + v.x, transform.position.y + v.y));
-            if (Vector2.Distance(position, transform.position) <= .1f)
-                currentPathPoint++;
+        Move();
 
-            // Angle of the car's rotation using tangent formula
-            rotationAngle = -Mathf.Atan2(position.x - transform.position.x, position.y - transform.position.y);
-            // Lerp for smoother rotation
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0f, 0f, rotationAngle * Mathf.Rad2Deg), (rotation / (speed * 4)) * Time.deltaTime);
-        } else {
-            rb.velocity = Vector2.zero;
+        switch (dir) {
+            case Direction.LEFT:
+                rotate = rotation;
+                break;
+            case Direction.RIGHT:
+                rotate = -rotation;
+                break;
+            case Direction.NONE:
+                rotate = 0f;
+                break;
         }
+
+        if (lifetime >= time)
+            currentPathPoint++;
     }
 
     public void Rotate()
     {
-        rotate = 0f;
-        if (GameManager.Instance.rightBClicked)
-            TurnRight();
-        else if (GameManager.Instance.leftBClicked)
-            TurnLeft();
-
-        rb.MoveRotation(rb.rotation + rotate * Time.deltaTime);
+        transform.Rotate(new Vector3(0f, 0f, Mathf.Lerp(transform.rotation.z, rotate * Time.deltaTime, rotation * Time.deltaTime)));
     }
 
     /// <summary>
@@ -114,6 +139,7 @@ public class Car : FixedSpeedObject, IUserControllable, IRotatable
     {
         GameManager.Instance.SetGameStopped(true);
         currentPathPoint = 0;
+        lifetime = 0f;
         if(!path.IsCreated)
             path.Reset();
         GameManager.Instance.ResetAllCars();
@@ -123,8 +149,9 @@ public class Car : FixedSpeedObject, IUserControllable, IRotatable
     {
         if(collision.CompareTag("Target Point") && isActive &&
             targetPoint.gameObject.Equals(collision.gameObject)) {
-            path.AddPoint(transform.position);
             path.IsCreated = true;
+            Stop();
+            path.CreatePath(lifetime, Direction.NONE);
             isActive = false;
             rb.isKinematic = true;
             name = "Car";
@@ -147,6 +174,7 @@ public class Car : FixedSpeedObject, IUserControllable, IRotatable
         transform.rotation = entrancePoint.transform.rotation;
         rotate = 0f;
         rb.velocity = Vector2.zero;
+        lifetime = 0f;
 
         if (!rb.isKinematic) {
             rb.bodyType = RigidbodyType2D.Static;

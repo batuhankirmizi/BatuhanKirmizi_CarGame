@@ -52,20 +52,8 @@ public class GameManager : GameStopNotifier
     [Range(0, 7)] public int currentPoint = 0;
     private void Update()
     {
-        #region Input Handling
         if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && !gameOver && GetGameStopped())
             SetGameStopped(false);
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && !GetGameStopped())
-            leftBClicked = true;
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && !GetGameStopped())
-            rightBClicked = true;
-        
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-            rightBClicked = false;
-        else if (Input.GetKeyUp(KeyCode.LeftArrow))
-            leftBClicked = false;
-        #endregion
 
         // Game over
         if (gameOver)

@@ -32,7 +32,7 @@ public abstract class FixedSpeedObject : GameStopObserver, IMovingObject
     public Vector2 Move()
     {
         Vector2 dir = (transform.GetChild(0).transform.position - transform.position).normalized;
-        rb.MovePosition(new Vector2(transform.position.x + dir.x * speed * Time.deltaTime, transform.position.y + dir.y * speed * Time.deltaTime));
+        rb.MovePosition(Vector2.MoveTowards(transform.position, transform.GetChild(0).transform.position, speed * Time.deltaTime));
         return dir;
     }
 }
